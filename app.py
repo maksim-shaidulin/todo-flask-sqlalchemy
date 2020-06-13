@@ -8,7 +8,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
-
 class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(250), nullable=False)
@@ -20,8 +19,9 @@ class Todo(db.Model):
         self.text = text
 
     def __repr__(self):
-        return f"{text}"
+        return f"{self.text}"
 
+db.create_all()
 
 @app.route("/")
 def index():
