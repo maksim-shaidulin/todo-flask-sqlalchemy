@@ -37,3 +37,13 @@ def toggle_done(id):
     todo.done = not todo.done
     database.edit_instance(Todo, id)
     return redirect(url_for("index"))
+
+@app.route("/edit/<int:id>", methods=["POST"])
+def edit(id):
+    if "text" in request.form:
+        text = request.form["text"]
+        database.edit_instance(Todo, id, text=text)
+        flash("Item is edited")
+    else:
+        flash("Error: no 'text' in data!")
+    return redirect(url_for("index"))

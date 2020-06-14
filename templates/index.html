@@ -20,7 +20,7 @@
 <body>
     <h1>ToDo List</h1>
     <div>New item:
-        <form action="add" method="POST">
+        <form action="{{ url_for('add') }}" method="POST">
             <input type="text" name="text">
             <input type="submit" value="Add">
         </form>
@@ -30,13 +30,18 @@
     <table class="table">
         <tr>
             <th>Text</th>
-            <th>Status</th>
-            <th></th>
+            <th>Done?</th>
+            <th>Change status</th>
             <th></th>
         </tr>
         {% for row in todo_list %}
         <tr>
-            <td>{{row.text}}</td>
+            <td>
+                <form action="{{ url_for('edit', id=row.id) }}" method="POST">
+                    <input type="text" value={{row.text}} name="text">
+                    <input type="submit" value="Edit">
+                </form>
+            </td>
             <td>{{row.done}}</td>
 
             <td>
