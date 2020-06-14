@@ -18,4 +18,4 @@ services:
       - ./config
     command: ["./wait-for-postgres.sh", "db", "flask", "run"]
     ports:
-      - "5000:5000"
+      - "80:5000"
