@@ -1,10 +1,13 @@
 from datetime import datetime
 from flask import Flask, request, render_template, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from . import config
 
 app = Flask(__name__)
 app.secret_key = "Secret Key"
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///todo.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_URI
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 

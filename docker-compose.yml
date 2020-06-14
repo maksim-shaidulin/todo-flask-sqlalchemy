@@ -1,7 +1,21 @@
 version: '3'
 
 services:
+  db:
+    image: postgres
+    restart: always
+    volumes:
+      - ./pgdata:/var/lib/postgresql/data
+    env_file:
+      - ./config
+    ports:
+      - "5432:5432"
   web:
     build: .
+    depends_on:
+      - db
+    env_file:
+      - ./config
+    command: ["./wait-for-postgres.sh", "db", "flask", "run"]
     ports:
       - "5000:5000"
