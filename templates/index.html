@@ -19,16 +19,17 @@
 
 <body>
     <h1>ToDo List</h1>
-    <div>New item:
-        <form action="{{ url_for('add') }}" method="POST">
+    <h2>New item:</h2>
+        <form action="{{ url_for('add_html') }}" method="POST">
             <input type="text" name="text">
             <input type="submit" value="Add">
         </form>
-    </div>
 
-    {% if todo_list %}
+    {% if todo_list.count() %}
+    <h2>Current items:</h2>
     <table class="table">
         <tr>
+            <th>ID</th>
             <th>Text</th>
             <th>Done?</th>
             <th>Change status</th>
@@ -36,8 +37,9 @@
         </tr>
         {% for row in todo_list %}
         <tr>
+            <td>{{row.id}}</td>
             <td>
-                <form action="{{ url_for('edit', id=row.id) }}" method="POST">
+                <form action="{{ url_for('edit_html', id=row.id) }}" method="POST">
                     <input type="text" value={{row.text}} name="text">
                     <input type="submit" value="Edit">
                 </form>
@@ -45,7 +47,7 @@
             <td>{{row.done}}</td>
 
             <td>
-                <form action="{{ url_for('toggle_done', id=row.id) }}" method="POST">
+                <form action="{{ url_for('toggle_done_html', id=row.id) }}" method="POST">
                     {% if row.done %}
                     <input type="submit" value="Undone">
                     {% else %}
@@ -55,7 +57,7 @@
             </td>
 
             <td>
-                <form action="{{ url_for('delete', id=row.id) }}" method="POST">
+                <form action="{{ url_for('delete_html', id=row.id) }}" method="POST">
                     <input type="submit" value="Delete">
                 </form>
             </td>

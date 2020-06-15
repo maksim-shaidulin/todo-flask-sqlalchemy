@@ -10,7 +10,7 @@ def get_all(model, order=None):
 
 
 def get_instance(model, id):
-    instance = model.query.filter_by(id=id)[0]
+    instance = model.query.filter_by(id=id).first()
     return instance
 
 
@@ -21,15 +21,19 @@ def add_instance(model, **kwargs):
 
 
 def delete_instance(model, id):
-    model.query.filter_by(id=id).delete()
+    count = model.query.filter_by(id=id).delete()
     commit_changes()
+    return count
 
 
 def edit_instance(model, id, **kwargs):
-    instance = model.query.filter_by(id=id).all()[0]
-    for attr, new_value in kwargs.items():
-        setattr(instance, attr, new_value)
-    commit_changes()
+    instance = model.query.filter_by(id=id).first()
+    if instance:
+        for attr, new_value in kwargs.items():
+            setattr(instance, attr, new_value)
+        commit_changes()
+        return 1
+    return 0
 
 
 def commit_changes():
